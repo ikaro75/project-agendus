@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="componente_propuesta" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" >
+	<property name="ireport.zoom" value="1.3310000000000026"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="clave_proyecto" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select clave_producto_proyecto, clave_proyecto, producto,
+(select estatus_producto_proyecto from pryct_estatus_producto_proyecto where clave_estatus_producto_proyecto = pryct_producto_proyecto.clave_estatus_producto_proyecto) as clave_estatus_producto_proyecto,
+orden, cantidad, importe, precio_unitario,
+(select impuesto from pryct_impuesto where clave_impuesto = pryct_producto_proyecto.clave_impuesto) as clave_impuesto,
+(select concat(nombre," ",apellido_paterno," ",apellido_materno) from be_empleado where clave_empleado = pryct_producto_proyecto.clave_empleado) as clave_empleado,
+(select area from be_area where clave_area = pryct_producto_proyecto.clave_area) as clave_area,
+fecha_cotizacion, costo_directo, costo_indirecto, factor_costo_operacion, factor_recuperacion, factor_riesgo,
+(select simbolo from pryct_moneda where clave_moneda = pryct_producto_proyecto.clave_moneda) as clave_moneda,
+tipo_cambio, fecha_inicial_planeada, fecha_inicial_real, fecha_final_planeada_producto, fecha_final_real,
+(DATEDIFF(fecha_final_planeada_producto, fecha_inicial_planeada)) as duracion
+from pryct_producto_proyecto
+where clave_proyecto=$P{clave_proyecto}
+order by orden asc]]>
+	</queryString>
+	<field name="clave_producto_proyecto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_proyecto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="producto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_estatus_producto_proyecto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="orden" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="importe" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio_unitario" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_impuesto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_empleado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_area" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_cotizacion" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="costo_directo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="costo_indirecto" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factor_costo_operacion" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factor_recuperacion" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factor_riesgo" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_moneda" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_cambio" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_inicial_planeada" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_inicial_real" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_final_planeada_producto" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_final_real" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="duracion" class="java.lang.Long"/>
+	<group name="clave_producto_proyecto">
+		<groupExpression><![CDATA[$F{clave_producto_proyecto}]]></groupExpression>
+	</group>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement  x="2" y="0" width="272" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción de los componentes:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="113" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement  x="1" y="18" width="585" height="27"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement  x="127" y="48" width="145" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_inicial_planeada}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="2" y="46" width="122" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de inicio:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement  x="127" y="67" width="145" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_final_planeada_producto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="2" y="65" width="122" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fecha final:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="2" y="-1" width="401" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Componente " + ($F{orden} == null ? "" : $F{orden}) + ":"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="2" y="84" width="123" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Tiempo de desarrollo:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="127" y="86" width="145" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{duracion} != null ? $F{duracion} + " días" : $F{duracion} )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement  x="147" y="15" width="319" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Aun no existen componentes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="1" y="0" width="272" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción de los componentes:]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

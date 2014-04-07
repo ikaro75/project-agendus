@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="costo_producto_anteproyecto" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" >
+	<property name="ireport.zoom" value="1.2396694214876032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="clave_proyecto" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select pryct_producto_proyecto.clave_producto_proyecto, pryct_producto_proyecto.clave_proyecto,
+pryct_producto_proyecto.cantidad, pryct_producto_proyecto.precio_unitario,
+(sum(pryct_producto_proyecto.importe)) as cuota_recuperacion,
+round(sum(pryct_producto_proyecto.costo_directo + ( pryct_producto_proyecto.costo_directo * ((select tasa from pryct_impuesto where (select ifnull(pryct_producto_proyecto.clave_impuesto,'1')) = pryct_impuesto.clave_impuesto)/ 100))),2) as costo_desarrollo,
+pryct_producto_proyecto.costo_indirecto, pryct_producto_proyecto.factor_costo_operacion, pryct_producto_proyecto.factor_recuperacion, pryct_producto_proyecto.factor_riesgo,
+sum((select tasa from pryct_impuesto where (select ifnull(pryct_producto_proyecto.clave_impuesto,'1')) = pryct_impuesto.clave_impuesto)) as clave_impuesto,
+pryct_producto_proyecto.tipo_cambio,
+pryct_proyecto.ingreso_planeado,
+sum((pryct_producto_proyecto.costo_directo * (1 + (pryct_producto_proyecto.factor_costo_operacion/100)))) as costos_administrativos,
+sum((pryct_producto_proyecto.costo_directo * (1 + (pryct_producto_proyecto.factor_recuperacion/100)))) as margen_beneficio,
+sum((pryct_producto_proyecto.costo_directo * (1 + (pryct_producto_proyecto.factor_riesgo/100)))) as riesgo_proyecto
+from pryct_producto_proyecto, pryct_proyecto
+where pryct_producto_proyecto.clave_proyecto=pryct_proyecto.clave_proyecto and pryct_producto_proyecto.clave_proyecto=$P{clave_proyecto}]]>
+	</queryString>
+	<field name="clave_producto_proyecto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_proyecto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio_unitario" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cuota_recuperacion" class="java.lang.Double">
+        <fieldDescription><![CDATA[]]></fieldDescription>
+    </field>
+	<field name="costo_desarrollo" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="costo_indirecto" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factor_costo_operacion" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factor_recuperacion" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="factor_riesgo" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_impuesto" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_cambio" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ingreso_planeado" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="costos_administrativos" class="java.lang.Double"/>
+	<field name="margen_beneficio" class="java.lang.Double"/>
+	<field name="riesgo_proyecto" class="java.lang.Double"/>
+	<detail>
+		<band height="173" splitType="Stretch">
+			<rectangle>
+				<reportElement  x="0" y="0" width="563" height="172"/>
+			</rectangle>
+			<textField pattern="#,##0.00">
+				<reportElement  x="454" y="43" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="11" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{costos_administrativos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement  x="9" y="43" width="377" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Aplicando el " + $F{factor_costo_operacion} + " % de Costos Administrativos"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="9" y="5" width="377" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Cuota de recuperación del Proyecto (Ingreso Planeado)]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement  x="454" y="5" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="11" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuota_recuperacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="9" y="24" width="377" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Costo de desarrollo (Incluyendo IVA)   ]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement  x="454" y="24" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="11" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{costo_desarrollo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="9" y="65" width="377" height="20"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Costo de operación ó Punto de equilibrio (Egreso Planeado)]]></text>
+			</staticText>
+			<line>
+				<reportElement  x="454" y="63" width="100" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement  x="454" y="85" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="11" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{margen_beneficio}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement  x="454" y="126" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="11" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{riesgo_proyecto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement  x="9" y="126" width="377" height="20"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Aplicando el "+ $F{factor_riesgo}+ "% de riesgo al proyecto"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement  x="454" y="107" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuota_recuperacion} + $F{costo_desarrollo} + $F{costos_administrativos} + $F{margen_beneficio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="9" y="107" width="377" height="20"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Costo de Operación con Inversión]]></text>
+			</staticText>
+			<line>
+				<reportElement  x="454" y="106" width="100" height="1"/>
+			</line>
+			<staticText>
+				<reportElement  x="9" y="147" width="377" height="20"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Contribución marginal (Costo del Proyecto en Tabla de Costeo)]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement  x="454" y="147" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuota_recuperacion} + $F{costo_desarrollo} + $F{costos_administrativos} + $F{margen_beneficio} + $F{riesgo_proyecto}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement  x="454" y="146" width="100" height="1"/>
+			</line>
+			<staticText>
+				<reportElement  x="410" y="24" width="32" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="410" y="75" width="32" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="410" y="117" width="32" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[+]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement  x="454" y="64" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cuota_recuperacion} + $F{costo_desarrollo} + $F{costos_administrativos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="447" y="5" width="8" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="447" y="24" width="8" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="447" y="43" width="8" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="447" y="64" width="8" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="447" y="85" width="8" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="447" y="107" width="8" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="447" y="126" width="8" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="447" y="147" width="8" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<textField>
+				<reportElement  x="9" y="85" width="377" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Aplicando el " + $F{factor_recuperacion} + " % de margen de beneficio"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
