@@ -1,0 +1,6 @@
+
+<?xml version="1.0" encoding="UTF-8"?><respuesta>
+<insert><![CDATA[INSERT INTO rlj_asistencia_empleado (clave_empleado,fecha_registro,clave_tipo_evento)VALUES(195,CONCAT(CURRENT_DATE(),' ',CURRENT_TIME()),1)]]></insert><pk>167</pk>
+<mensaje><![CDATA[<div><img scr='/intranet/temp/195/user penny.jpg' />Daniel Martinez Magaña]]><br>
+        <br>Entrada</div>]]></mensaje>
+</respuesta>

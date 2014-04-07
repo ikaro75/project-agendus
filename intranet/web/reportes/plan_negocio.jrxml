@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="plan_de_negocio" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
+	<property name="ireport.zoom" value="1.4641000000000257"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="3069"/>
+	<scriptlet name="scriptlet1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
+	<parameter name="clave_proyecto" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select clave_proyecto, clave_cliente, etiqueta, proyecto, proyeccion_ingresos, objetivo_general, alcance, descripcion,
+justificacion, punto_equilibrio, fecha_alta, fecha_inicio_planeada, fecha_final_planeada, (DATEDIFF(pryct_proyecto.fecha_final_planeada, pryct_proyecto.fecha_inicio_planeada)) as 'tiempo_desarrollo',
+(select area from be_area where clave_area=pryct_proyecto.clave_area) as clave_area, promocion, ingreso_planeado,
+ifnull(QUANTITY_LETTER(ingreso_planeado,clave_moneda),'') as ingreso_planeado_letra,
+(select concat(substring_index(moneda,' ',1),' M.N.') from pryct_moneda where clave_moneda = pryct_proyecto.clave_moneda) as clave_moneda,
+costo_desarrollo, conclusion, consideraciones, garantia_servicio,
+(select razon_social from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as razon_social,
+(select tipo_cliente from prmcn_cliente, prmcn_tipo_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente and prmcn_cliente.clave_tipo_cliente = prmcn_tipo_cliente.clave_tipo_cliente) as clave_tipo_cliente,
+(select fase_cliente from prmcn_cliente, prmcn_fase_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente and prmcn_cliente.clave_fase_cliente = prmcn_fase_cliente.clave_fase_cliente) as clave_fase_cliente,
+(select sigla from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as sigla,
+(select rfc from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as rfc,
+(select calle from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as calle,
+(select numero_exterior from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as numero_exterior,
+(select numero_interior from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as numero_interior,
+(select colonia from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as colonia,
+(select cp from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as cp,
+(select municipio from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as municipio,
+(select ciudad from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as ciudad,
+(select estado from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as estado,
+(select pais from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as pais,
+(select url from prmcn_cliente where prmcn_cliente.clave_cliente = pryct_proyecto.clave_cliente) as url
+from pryct_proyecto
+where pryct_proyecto.clave_proyecto=$P{clave_proyecto}]]>
+	</queryString>
+	<field name="clave_proyecto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_cliente" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="etiqueta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proyecto" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proyeccion_ingresos" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="objetivo_general" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alcance" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="justificacion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="punto_equilibrio" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_alta" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_inicio_planeada" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_final_planeada" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tiempo_desarrollo" class="java.lang.Long"/>
+	<field name="clave_area" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="promocion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ingreso_planeado" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ingreso_planeado_letra" class="java.lang.String"/>
+	<field name="clave_moneda" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="costo_desarrollo" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="conclusion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="consideraciones" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="garantia_servicio" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="razon_social" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_tipo_cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="clave_fase_cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sigla" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rfc" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="calle" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_exterior" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_interior" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="colonia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="municipio" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ciudad" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pais" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="url" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<group name="clave_proyecto">
+		<groupExpression><![CDATA[$F{clave_proyecto}]]></groupExpression>
+		<groupHeader>
+			<band height="495">
+				<image>
+					<reportElement  x="0" y="1" width="572" height="468"/>
+					<imageExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\portadaProyecto.jpg"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement  x="6" y="239" width="365" height="26" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="15" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Proyecto]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement  x="6" y="264" width="365" height="65" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="15" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" \" " + $F{proyecto} + " \" "]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement  x="6" y="83" width="367" height="26" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="19" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Plan de negocios para el ILCE]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="75" splitType="Stretch">
+			<image>
+				<reportElement  x="495" y="0" width="77" height="51"/>
+				<imageExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\logo_ilce.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement  x="0" y="24" width="572" height="20" forecolor="#999999"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Plan de negocio para el ILCE]]></text>
+			</staticText>
+			<image>
+				<reportElement  x="0" y="52" width="572" height="15"/>
+				<imageExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\linea.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="523" splitType="Stretch">
+			<staticText>
+				<reportElement  x="4" y="51" width="564" height="151" forecolor="#365F91"/>
+				<textElement textAlignment="Justified">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Elaborar el Plan de Negocio nos mostrará en papel la planeación detallada del Área Sustantiva sobre el proyecto y nos permitirá identificar oportunamente las fortalezas y debilidades que presenta el mismo.
+
+En el Plan de Negocio deberán considerarse los recursos humanos, materiales y tecnológicos, entre otros, que se van a necesitar para el proyecto, incluir el cronograma de trabajo, las fechas comprometidas, las aportaciones que se obtendrán e indicar cuándo van a recibirse éstas, con la intención de conocer anticipadamente si el Instituto tendrá que financiar parte del proyecto.
+
+A continuación mostramos los apartados que deberá contener el plan de Negocio Interno que deberá presentarse a la Dirección General y a la Coordinación de Finanzas, a través de la Dirección de Administración de Proyectos.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="214" width="564" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resumen ejecutivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="10" width="564" height="20" forecolor="#365F91"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cómo elaborar el Plan de Negocio del Proyecto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="404" width="272" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Datos de contacto con el Grupo de Interés:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="244" width="272" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del proyecto: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="308" width="272" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grupo de Interés:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="263" width="564" height="45"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proyecto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="327" width="564" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{razon_social}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement  x="4" y="423" width="564" height="100"/>
+				<subreportParameter name="clave_proyecto">
+					<subreportParameterExpression><![CDATA[$F{clave_proyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\contacto_grupo_interes.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="352" width="270" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["-  " + $F{clave_tipo_cliente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="367" width="270" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{url} == null || $F{url} == "-") ? "" : "-  " + $F{url}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="382" width="221" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{pais} == null || $F{pais} == "-") ? "" : "-  " + $F{pais}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="259">
+			<break>
+				<reportElement  x="0" y="0" width="564" height="1"/>
+			</break>
+			<staticText>
+				<reportElement  x="4" y="1" width="354" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Proyección de ingresos:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="21" width="562" height="100"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proyeccion_ingresos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="4" y="121" width="131" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cuota de recuperación:]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement  x="130" y="122" width="187" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ingreso_planeado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="4" y="141" width="131" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Punto de equilibrio:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="108" y="142" width="209" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{punto_equilibrio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="4" y="161" width="131" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periodo de ejecución:]]></text>
+			</staticText>
+			<textField pattern="dd &apos;de&apos; MMMMM &apos;del&apos; yyyy" isBlankWhenNull="false">
+				<reportElement  x="122" y="161" width="171" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_inicio_planeada}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd &apos;de&apos; MMMMM &apos;del&apos; yyyy" isBlankWhenNull="true">
+				<reportElement  x="273" y="161" width="177" height="20"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_final_planeada}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="4" y="181" width="131" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Promoción:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="200" width="562" height="20"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{promocion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="253" y="160" width="22" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[ al ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="220" width="131" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Áreas participantes:]]></text>
+			</staticText>
+			<textField>
+				<reportElement  x="4" y="239" width="562" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clave_area}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="356">
+			<staticText>
+				<reportElement  x="4" y="32" width="272" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Definición del proyecto: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="130" width="272" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Objetivo: ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="51" width="564" height="79"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proyecto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="254" width="564" height="102"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{alcance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="4" y="235" width="272" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estrategia / Alcance: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="10" width="564" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Antecedentes del proyecto]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="149" width="564" height="86"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{objetivo_general}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="110">
+			<break>
+				<reportElement  x="0" y="0" width="564" height="1"/>
+			</break>
+			<subreport>
+				<reportElement  x="4" y="1" width="566" height="100"/>
+				<subreportParameter name="clave_proyecto">
+					<subreportParameterExpression><![CDATA[$P{clave_proyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\entregables_anteproyecto.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="169">
+			<staticText>
+				<reportElement  x="4" y="2" width="564" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Análisis del Mercado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="71" width="564" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Organización interna   ]]></text>
+			</staticText>
+			<subreport>
+				<reportElement  x="5" y="94" width="564" height="75"/>
+				<subreportParameter name="clave_proyecto">
+					<subreportParameterExpression><![CDATA[$P{clave_proyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\responsables_anteproyecto.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement  x="4" y="25" width="272" height="44" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Competencia]]></text>
+			</staticText>
+		</band>
+		<band height="201">
+			<break>
+				<reportElement  x="0" y="1" width="564" height="1"/>
+			</break>
+			<staticText>
+				<reportElement  x="4" y="2" width="272" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recursos humanos requeridos:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement  x="6" y="50" width="562" height="61"/>
+				<subreportParameter name="clave_proyecto">
+					<subreportParameterExpression><![CDATA[$P{clave_proyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\rh_internos_anteproyecto.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement  x="5" y="137" width="562" height="59"/>
+				<subreportParameter name="clave_proyecto">
+					<subreportParameterExpression><![CDATA[$P{clave_proyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\rh_externos_anteproyecto.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement  x="6" y="30" width="272" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Personal ILCE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="5" y="117" width="272" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Personal a contratar (ODS)]]></text>
+			</staticText>
+		</band>
+		<band height="170">
+			<break>
+				<reportElement  x="0" y="0" width="564" height="1"/>
+			</break>
+			<staticText>
+				<reportElement  x="4" y="1" width="564" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cronograma de actividades]]></text>
+			</staticText>
+			<subreport>
+				<reportElement  x="0" y="49" width="572" height="121"/>
+				<subreportParameter name="clave_proyecto">
+					<subreportParameterExpression><![CDATA[$P{clave_proyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\gantt_anteproyecto.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="261">
+			<break>
+				<reportElement  x="0" y="0" width="564" height="1"/>
+			</break>
+			<staticText>
+				<reportElement  x="4" y="1" width="564" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Información financiera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="23" width="272" height="20" forecolor="#548DD4"/>
+				<textElement textAlignment="Justified">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cuota de recuperación: ]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
+				<reportElement  x="111" y="63" width="181" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ingreso_planeado}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="94" width="564" height="49"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(" + $F{ingreso_planeado_letra} + ")"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="4" y="42" width="272" height="20"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[La cuota de recuperación para el proyecto es: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="143" width="272" height="20" forecolor="#548DD4"/>
+				<textElement textAlignment="Justified">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número y porcentaje de las aportaciones:]]></text>
+			</staticText>
+			<textField>
+				<reportElement  x="294" y="63" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{clave_moneda}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement  x="4" y="163" width="564" height="71"/>
+				<subreportParameter name="clave_proyecto">
+					<subreportParameterExpression><![CDATA[$P{clave_proyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\aportaciones_anteproyecto.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="87">
+			<staticText>
+				<reportElement  x="4" y="1" width="131" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costos del proyecto:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement  x="4" y="21" width="564" height="66"/>
+				<subreportParameter name="clave_proyecto">
+					<subreportParameterExpression><![CDATA[$P{clave_proyecto}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\costo_producto_anteproyecto.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="635">
+			<break>
+				<reportElement  x="0" y="0" width="564" height="1"/>
+			</break>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="4" y="20" width="564" height="48"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{conclusion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="4" y="1" width="249" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Conclusiones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="4" y="142" width="124" height="20" forecolor="#548DD4"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tiempo de desarrollo:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="125" y="142" width="215" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tiempo_desarrollo} + " días"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="4" y="162" width="117" height="20" forecolor="#548DD4"/>
+				<textElement textAlignment="Justified">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Garantía de servicio:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="117" y="163" width="453" height="86"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{garantia_servicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement  x="4" y="69" width="249" height="20" forecolor="#365F91"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Consideraciones del Proyecto]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="5" y="88" width="564" height="53"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{consideraciones}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement  x="27" y="249" width="504" height="386"/>
+				<imageExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\portadaFinal.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<image>
+				<reportElement  x="0" y="0" width="572" height="34"/>
+				<imageExpression><![CDATA["C:\\apache-tomcat-6.0\\webapps\\intranet\\reportes\\piePagina.jpg"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="0" y="10" width="572" height="20" forecolor="#999999"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

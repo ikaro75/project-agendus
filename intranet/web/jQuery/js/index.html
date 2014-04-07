@@ -1,0 +1,43 @@
+<html>
+<head>
+<script type="text/javascript" src="jquery-1.4.4.js"></script>   
+<script type="text/javascript" src="ui/jquery-ui-1.8.9.custom.min.js"></script>   
+<script type="text/javascript" src="jquery.scrolltab.js"></script>   
+<link rel="stylesheet" type="text/css" href="ui/css/jquery-ui-1.8.9.custom.css" media="screen"/> 
+<link rel="stylesheet" type="text/css" href="style.css" media="screen"/> 
+</head>
+<body>
+<div id="tabs" style="overflow: hidden; width:100%;" >
+	<div id="left" style="display:none;"></div>
+	<div id="right" style="display:none;"></div>
+	<ul id="tabUl"></ul>
+	<div style="clear: both;margin-bottom: 30px;"></div>
+</div>
+<input type="button" value="Add Tab" id="addTab" />
+<script type="text/javascript">
+        var $tabs;
+        $(document).ready(function(){
+            var tabId = 1;
+	    $('#addTab').click(function(){
+		loadData(tabId,"Tab "+tabId);
+		tabId++;
+	    });
+                    
+            $tabs = $( "#tabs").tabs({
+                tabTemplate: "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' style='float: right;'>Remove Tab</span></li>"
+            }).scrolltab();
+                    
+        });
+                    
+        function loadData(id,title){
+            if($('#tabs-'+id).length <= 0){
+                $tabs.trigger('addTab',[id, title]);
+            }else{
+                var index = $('#tabs a[href="#tabs-'+id+'"]').parent().index();
+                $tabs.trigger('selectTab',[index]);
+            }
+        }
+</script>
+
+</body>
+</html>
